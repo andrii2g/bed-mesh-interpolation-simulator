@@ -96,7 +96,9 @@ public sealed class InverseDistanceInterpolator : ISurfaceInterpolator
         double weights = 0;
         foreach (ProbeSample sample in grid.Samples)
         {
-            double distance = Math.Hypot(x - sample.X, y - sample.Y);
+            double dx = x - sample.X;
+            double dy = y - sample.Y;
+            double distance = Math.Sqrt((dx * dx) + (dy * dy));
             if (distance <= _options.ExactNodeTolerance)
             {
                 return sample.Z;
