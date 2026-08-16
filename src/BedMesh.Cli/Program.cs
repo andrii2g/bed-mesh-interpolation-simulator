@@ -1,1 +1,1 @@
-﻿Console.WriteLine("Hello, World!");
+return CliApp.Run(args);
