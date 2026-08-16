@@ -119,7 +119,7 @@ public sealed class SvgArtifactTests
     }
 
     [Fact]
-    public void ComparisonChartIsDeterministicValidXml()
+    public void ComparisonChartFitsLegendAndIsDeterministicValidXml()
     {
         SimulationScenario scenario = ScenarioCatalog.Create("bowl");
         var entries = new List<MeshComparisonEntry>();
@@ -141,7 +141,19 @@ public sealed class SvgArtifactTests
         string first = MeshComparisonSvgRenderer.Render(entries);
         string second = MeshComparisonSvgRenderer.Render(entries);
         XDocument document = XDocument.Parse(first);
-        Assert.Equal("svg", document.Root?.Name.LocalName);
+        XElement root = Assert.IsType<XElement>(document.Root);
+        Assert.Equal("svg", root.Name.LocalName);
+        Assert.Equal("960", root.Attribute("width")?.Value);
+        Assert.Equal("0 0 960 620", root.Attribute("viewBox")?.Value);
+        XNamespace svg = root.Name.Namespace;
+        XElement[] legendLabels = root
+            .Descendants(svg + "text")
+            .Where(element => element.Value.EndsWith(" RMSE", StringComparison.Ordinal) ||
+                element.Value.EndsWith(" max |error|", StringComparison.Ordinal))
+            .ToArray();
+        Assert.NotEmpty(legendLabels);
+        Assert.All(legendLabels, label =>
+            Assert.True(960 - int.Parse(label.Attribute("x")!.Value) >= 250));
         Assert.Contains("RMSE", first);
         Assert.Contains("max |error|", first);
         Assert.DoesNotContain("NaN", first);

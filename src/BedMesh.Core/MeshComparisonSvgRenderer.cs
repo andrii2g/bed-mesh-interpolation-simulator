@@ -12,6 +12,8 @@ public sealed record MeshComparisonEntry(
 
 public static class MeshComparisonSvgRenderer
 {
+    private const double DocumentWidth = 960;
+    private const double DocumentHeight = 620;
     private const double Left = 85;
     private const double Top = 55;
     private const double PlotWidth = 540;
@@ -62,9 +64,11 @@ public static class MeshComparisonSvgRenderer
 
         var builder = new StringBuilder(4096);
         builder.AppendLine("""<?xml version="1.0" encoding="utf-8"?>""");
-        builder.AppendLine("""<svg xmlns="http://www.w3.org/2000/svg" width="760" height="620" viewBox="0 0 760 620" role="img">""");
+        builder.AppendLine(FormattableString.Invariant(
+            $"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{DocumentWidth:0}\" height=\"{DocumentHeight:0}\" viewBox=\"0 0 {DocumentWidth:0} {DocumentHeight:0}\" role=\"img\">"));
         builder.AppendLine("  <title>Mesh interpolation error comparison</title>");
-        builder.AppendLine("""  <text x="380" y="28" text-anchor="middle" font-size="18" font-family="sans-serif">Mesh interpolation error comparison</text>""");
+        builder.AppendLine(FormattableString.Invariant(
+            $"  <text x=\"{DocumentWidth / 2:0.###}\" y=\"28\" text-anchor=\"middle\" font-size=\"18\" font-family=\"sans-serif\">Mesh interpolation error comparison</text>"));
 
         for (int tick = 0; tick <= 5; tick++)
         {

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="620" viewBox="0 0 960 620" role="img">
+  <title>Mesh interpolation error comparison</title>
+  <text x="480" y="28" text-anchor="middle" font-size="18" font-family="sans-serif">Mesh interpolation error comparison</text>
+  <line x1="85" y1="505" x2="625" y2="505" stroke="#d1d5db"/>
+  <text x="75" y="509" text-anchor="end" font-size="11">0.0000</text>
+  <line x1="85" y1="415" x2="625" y2="415" stroke="#d1d5db"/>
+  <text x="75" y="419" text-anchor="end" font-size="11">0.0224</text>
+  <line x1="85" y1="325" x2="625" y2="325" stroke="#d1d5db"/>
+  <text x="75" y="329" text-anchor="end" font-size="11">0.0448</text>
+  <line x1="85" y1="235" x2="625" y2="235" stroke="#d1d5db"/>
+  <text x="75" y="239" text-anchor="end" font-size="11">0.0673</text>
+  <line x1="85" y1="145" x2="625" y2="145" stroke="#d1d5db"/>
+  <text x="75" y="149" text-anchor="end" font-size="11">0.0897</text>
+  <line x1="85" y1="55" x2="625" y2="55" stroke="#d1d5db"/>
+  <text x="75" y="59" text-anchor="end" font-size="11">0.1121</text>
+  <line x1="85" y1="55" x2="85" y2="505" stroke="#333"/>
+  <line x1="85" y1="505" x2="625" y2="505" stroke="#333"/>
+  <text x="85" y="528" text-anchor="middle" font-size="11">3x3</text>
+  <text x="85" y="544" text-anchor="middle" font-size="10">9 probes</text>
+  <text x="355" y="528" text-anchor="middle" font-size="11">5x5</text>
+  <text x="355" y="544" text-anchor="middle" font-size="10">25 probes</text>
+  <text x="625" y="528" text-anchor="middle" font-size="11">7x7</text>
+  <text x="625" y="544" text-anchor="middle" font-size="10">49 probes</text>
+  <path d="M 85 253.135 L 355 442.034 L 625 477.015" fill="none" stroke="#2563eb" stroke-width="2"/>
+  <circle cx="85" cy="253.135" r="3" fill="#2563eb"/>
+  <circle cx="355" cy="442.034" r="3" fill="#2563eb"/>
+  <circle cx="625" cy="477.015" r="3" fill="#2563eb"/>
+  <path d="M 85 143.75 L 355 414.687 L 625 464.861" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="5 4"/>
+  <circle cx="85" cy="143.75" r="3" fill="#2563eb"/>
+  <circle cx="355" cy="414.687" r="3" fill="#2563eb"/>
+  <circle cx="625" cy="464.861" r="3" fill="#2563eb"/>
+  <line x1="650" y1="85" x2="680" y2="85" stroke="#2563eb" stroke-width="2"/>
+  <text x="688" y="89" font-size="11">Bilinear RMSE</text>
+  <line x1="650" y1="105" x2="680" y2="105" stroke="#2563eb" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="688" y="109" font-size="11">Bilinear max |error|</text>
+  <path d="M 85 182.338 L 355 365.996 L 625 399.833" fill="none" stroke="#dc2626" stroke-width="2"/>
+  <circle cx="85" cy="182.338" r="3" fill="#dc2626"/>
+  <circle cx="355" cy="365.996" r="3" fill="#dc2626"/>
+  <circle cx="625" cy="399.833" r="3" fill="#dc2626"/>
+  <path d="M 85 55 L 355 205.51 L 625 266.095" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 4"/>
+  <circle cx="85" cy="55" r="3" fill="#dc2626"/>
+  <circle cx="355" cy="205.51" r="3" fill="#dc2626"/>
+  <circle cx="625" cy="266.095" r="3" fill="#dc2626"/>
+  <line x1="650" y1="133" x2="680" y2="133" stroke="#dc2626" stroke-width="2"/>
+  <text x="688" y="137" font-size="11">IDW (p=2) RMSE</text>
+  <line x1="650" y1="153" x2="680" y2="153" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="688" y="157" font-size="11">IDW (p=2) max |error|</text>
+  <text x="355" y="590" text-anchor="middle" font-size="13">Probe mesh density</text>
+  <text x="20" y="280" transform="rotate(-90 20 280)" text-anchor="middle" font-size="13">Error (mm)</text>
+</svg>

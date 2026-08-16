@@ -37,27 +37,6 @@ flowchart LR
 The interpolator receives only `ProbeGrid`; it never receives the analytical
 surface. This boundary is the central correctness rule.
 
-## Repository
-
-```text
-BedMeshInterpolationSimulator.slnx
-src/
-  BedMesh.Core/          numerical domain, interpolation, evaluation, SVG
-  BedMesh.Cli/           command parser and console reporting
-tests/
-  BedMesh.Core.Tests/    unit, integration, artifact, and CLI smoke tests
-docs/
-  ARCHITECTURE.md
-  ALGORITHMS.md
-  SURFACE_MODELS.md
-  SCENARIOS.md
-  SVG_OUTPUT.md
-  TESTING.md
-.github/workflows/ci.yml
-```
-
-Only the `.slnx` solution format is used.
-
 ## Build and verify
 
 ```bash
@@ -106,6 +85,36 @@ The 0.15 mm bump is narrower than the 62.5 mm probe spacing and falls between
 probe nodes. The reconstruction is therefore about 0.1486 mm too low at the
 bump center. Interpolation cannot recreate information that was not sampled.
 
+### Generated hidden-bump gallery
+
+The checked-in gallery uses a 101x101 evaluation grid to keep the SVG previews
+compact. It was generated with:
+
+```bash
+dotnet run --project src/BedMesh.Cli -- simulate --scenario hidden-bump --mesh 5 --interpolation bilinear --evaluation 101 --output docs/results/hidden-bump-5x5-bilinear
+```
+
+| Metric | Generated value |
+|---|---:|
+| RMSE | 0.012405 mm |
+| MAE | 0.002160 mm |
+| Maximum absolute error | 0.147543 mm |
+| Worst location | X=170 mm, Y=95 mm |
+
+| Sparse samples | Analytical truth |
+|---|---|
+| ![Hidden-bump sampled mesh](docs/results/hidden-bump-5x5-bilinear/sampled-mesh.svg) | ![Hidden-bump analytical surface](docs/results/hidden-bump-5x5-bilinear/true-surface.svg) |
+
+| Bilinear reconstruction | Signed error |
+|---|---|
+| ![Hidden-bump reconstruction](docs/results/hidden-bump-5x5-bilinear/reconstructed-surface.svg) | ![Hidden-bump signed error](docs/results/hidden-bump-5x5-bilinear/signed-error.svg) |
+
+| Absolute error | X centerline |
+|---|---|
+| ![Hidden-bump absolute error](docs/results/hidden-bump-5x5-bilinear/absolute-error.svg) | ![Hidden-bump X centerline](docs/results/hidden-bump-5x5-bilinear/centerline-x.svg) |
+
+![Hidden-bump Y centerline](docs/results/hidden-bump-5x5-bilinear/centerline-y.svg)
+
 ## Compare mesh densities
 
 ```bash
@@ -114,6 +123,25 @@ dotnet run --project src/BedMesh.Cli -- compare --scenario bowl --interpolation 
 
 Comparison mode evaluates 3x3, 5x5, and 7x7 meshes for each selected algorithm.
 It writes per-run SVG folders plus `comparison.csv` and `mesh-comparison.svg`.
+
+### Generated comparison results
+
+| Mesh | Probes | Algorithm | RMSE (mm) | MAE (mm) | Max abs. error (mm) |
+|---|---:|---|---:|---:|---:|
+| 3x3 | 9 | Bilinear | 0.062744 | 0.059757 | 0.089994 |
+| 3x3 | 9 | IDW | 0.080381 | 0.074630 | 0.112104 |
+| 5x5 | 25 | Bilinear | 0.015686 | 0.014939 | 0.022499 |
+| 5x5 | 25 | IDW | 0.034629 | 0.028007 | 0.074609 |
+| 7x7 | 49 | Bilinear | 0.006972 | 0.006640 | 0.009999 |
+| 7x7 | 49 | IDW | 0.026199 | 0.020671 | 0.059516 |
+
+![Bowl mesh-density comparison](docs/results/bowl-comparison/mesh-comparison.svg)
+
+[Download the generated comparison CSV](docs/results/bowl-comparison/comparison.csv).
+
+For this smooth quadratic bowl, both algorithms improve with mesh density, while
+bilinear interpolation has lower RMSE and maximum absolute error at every tested
+mesh size.
 
 ## Commands
 

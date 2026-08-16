@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="620" viewBox="0 0 760 620" role="img">
+  <title>Sampled probe mesh (5x5)</title>
+  <text x="380" y="28" text-anchor="middle" font-size="18" font-family="sans-serif">Sampled probe mesh (5x5)</text>
+  <g id="grid-lines" stroke="#888" stroke-width="1">
+    <line x1="80" y1="50" x2="80" y2="550"/>
+    <line x1="205" y1="50" x2="205" y2="550"/>
+    <line x1="330" y1="50" x2="330" y2="550"/>
+    <line x1="455" y1="50" x2="455" y2="550"/>
+    <line x1="580" y1="50" x2="580" y2="550"/>
+    <line x1="80" y1="550" x2="580" y2="550"/>
+    <line x1="80" y1="425" x2="580" y2="425"/>
+    <line x1="80" y1="300" x2="580" y2="300"/>
+    <line x1="80" y1="175" x2="580" y2="175"/>
+    <line x1="80" y1="50" x2="580" y2="50"/>
+  </g>
+  <g id="probe-points" fill="#f59e0b" stroke="#1f2937">
+    <circle cx="80" cy="550" r="5"/>
+    <text x="87" y="543" font-size="10" fill="#111">0.000</text>
+    <circle cx="205" cy="550" r="5"/>
+    <text x="212" y="543" font-size="10" fill="#111">0.000</text>
+    <circle cx="330" cy="550" r="5"/>
+    <text x="337" y="543" font-size="10" fill="#111">0.000</text>
+    <circle cx="455" cy="550" r="5"/>
+    <text x="462" y="543" font-size="10" fill="#111">0.000</text>
+    <circle cx="580" cy="550" r="5"/>
+    <text x="587" y="543" font-size="10" fill="#111">0.000</text>
+    <circle cx="80" cy="425" r="5"/>
+    <text x="87" y="418" font-size="10" fill="#111">0.000</text>
+    <circle cx="205" cy="425" r="5"/>
+    <text x="212" y="418" font-size="10" fill="#111">0.000</text>
+    <circle cx="330" cy="425" r="5"/>
+    <text x="337" y="418" font-size="10" fill="#111">0.000</text>
+    <circle cx="455" cy="425" r="5"/>
+    <text x="462" y="418" font-size="10" fill="#111">+0.002</text>
+    <circle cx="580" cy="425" r="5"/>
+    <text x="587" y="418" font-size="10" fill="#111">0.000</text>
+    <circle cx="80" cy="300" r="5"/>
+    <text x="87" y="293" font-size="10" fill="#111">0.000</text>
+    <circle cx="205" cy="300" r="5"/>
+    <text x="212" y="293" font-size="10" fill="#111">0.000</text>
+    <circle cx="330" cy="300" r="5"/>
+    <text x="337" y="293" font-size="10" fill="#111">0.000</text>
+    <circle cx="455" cy="300" r="5"/>
+    <text x="462" y="293" font-size="10" fill="#111">+0.002</text>
+    <circle cx="580" cy="300" r="5"/>
+    <text x="587" y="293" font-size="10" fill="#111">0.000</text>
+    <circle cx="80" cy="175" r="5"/>
+    <text x="87" y="168" font-size="10" fill="#111">0.000</text>
+    <circle cx="205" cy="175" r="5"/>
+    <text x="212" y="168" font-size="10" fill="#111">0.000</text>
+    <circle cx="330" cy="175" r="5"/>
+    <text x="337" y="168" font-size="10" fill="#111">0.000</text>
+    <circle cx="455" cy="175" r="5"/>
+    <text x="462" y="168" font-size="10" fill="#111">0.000</text>
+    <circle cx="580" cy="175" r="5"/>
+    <text x="587" y="168" font-size="10" fill="#111">0.000</text>
+    <circle cx="80" cy="50" r="5"/>
+    <text x="87" y="43" font-size="10" fill="#111">0.000</text>
+    <circle cx="205" cy="50" r="5"/>
+    <text x="212" y="43" font-size="10" fill="#111">0.000</text>
+    <circle cx="330" cy="50" r="5"/>
+    <text x="337" y="43" font-size="10" fill="#111">0.000</text>
+    <circle cx="455" cy="50" r="5"/>
+    <text x="462" y="43" font-size="10" fill="#111">0.000</text>
+    <circle cx="580" cy="50" r="5"/>
+    <text x="587" y="43" font-size="10" fill="#111">0.000</text>
+  </g>
+  <text x="330" y="600" text-anchor="middle" font-size="13">X (mm), 0 to 250</text>
+  <text x="20" y="300" transform="rotate(-90 20 300)" text-anchor="middle" font-size="13">Y (mm), 0 to 250</text>
+  <text x="610" y="90" font-size="13">Min: 0.0000 mm</text>
+  <text x="610" y="115" font-size="13">Max: +0.0021 mm</text>
+</svg>
