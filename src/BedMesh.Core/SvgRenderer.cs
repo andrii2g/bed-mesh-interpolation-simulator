@@ -224,6 +224,7 @@ public static class SvgRenderer
         builder.AppendLine(FormattableString.Invariant(
             $"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{Width}\" height=\"{Height}\" viewBox=\"0 0 {Width} {Height}\" role=\"img\">"));
         builder.AppendLine($"  <title>{Escape(title)}</title>");
+        builder.AppendLine("""  <rect width="100%" height="100%" fill="#ffffff"/>""");
         builder.AppendLine($"  <text x=\"{Width / 2}\" y=\"28\" text-anchor=\"middle\" font-size=\"18\" font-family=\"sans-serif\">{Escape(title)}</text>");
         return builder;
     }

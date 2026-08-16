@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="620" viewBox="0 0 960 620" role="img">
   <title>Mesh interpolation error comparison</title>
+  <rect width="100%" height="100%" fill="#ffffff"/>
   <text x="480" y="28" text-anchor="middle" font-size="18" font-family="sans-serif">Mesh interpolation error comparison</text>
   <line x1="85" y1="505" x2="625" y2="505" stroke="#d1d5db"/>
   <text x="75" y="509" text-anchor="end" font-size="11">0.0000</text>

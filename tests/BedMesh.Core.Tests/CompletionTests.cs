@@ -103,6 +103,7 @@ public sealed class SvgArtifactTests
                 XDocument document = XDocument.Parse(svg);
                 Assert.Equal("svg", document.Root?.Name.LocalName);
                 Assert.NotNull(document.Root?.Element(document.Root!.Name.Namespace + "title"));
+                AssertHasOpaqueWhiteBackground(document);
                 Assert.Contains("mm", svg);
                 Assert.DoesNotContain("NaN", svg);
                 Assert.DoesNotContain("Infinity", svg);
@@ -145,6 +146,7 @@ public sealed class SvgArtifactTests
         Assert.Equal("svg", root.Name.LocalName);
         Assert.Equal("960", root.Attribute("width")?.Value);
         Assert.Equal("0 0 960 620", root.Attribute("viewBox")?.Value);
+        AssertHasOpaqueWhiteBackground(document);
         XNamespace svg = root.Name.Namespace;
         XElement[] legendLabels = root
             .Descendants(svg + "text")
@@ -159,6 +161,19 @@ public sealed class SvgArtifactTests
         Assert.DoesNotContain("NaN", first);
         Assert.DoesNotContain("Infinity", first);
         Assert.Equal(first, second);
+    }
+
+    private static void AssertHasOpaqueWhiteBackground(XDocument document)
+    {
+        XElement root = Assert.IsType<XElement>(document.Root);
+        XNamespace svg = root.Name.Namespace;
+        XElement background = Assert.Single(root.Elements(svg + "rect"), element =>
+            element.Attribute("width")?.Value == "100%" &&
+            element.Attribute("height")?.Value == "100%");
+        Assert.Equal("100%", background.Attribute("width")?.Value);
+        Assert.Equal("100%", background.Attribute("height")?.Value);
+        Assert.Equal("#ffffff", background.Attribute("fill")?.Value);
+
     }
 
     private static string TemporaryDirectory()

@@ -67,6 +67,7 @@ public static class MeshComparisonSvgRenderer
         builder.AppendLine(FormattableString.Invariant(
             $"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{DocumentWidth:0}\" height=\"{DocumentHeight:0}\" viewBox=\"0 0 {DocumentWidth:0} {DocumentHeight:0}\" role=\"img\">"));
         builder.AppendLine("  <title>Mesh interpolation error comparison</title>");
+        builder.AppendLine("""  <rect width="100%" height="100%" fill="#ffffff"/>""");
         builder.AppendLine(FormattableString.Invariant(
             $"  <text x=\"{DocumentWidth / 2:0.###}\" y=\"28\" text-anchor=\"middle\" font-size=\"18\" font-family=\"sans-serif\">Mesh interpolation error comparison</text>"));
 

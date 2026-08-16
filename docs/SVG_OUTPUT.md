@@ -34,8 +34,13 @@ versus dashed paths.
 
 ## Document geometry
 
-Generated SVG documents use a 760 x 620 view box. Heatmaps reserve a 500 x 500
+Per-simulation SVG documents use a 760 x 620 view box; comparison charts use
+a 960 x 620 view box with additional legend space. Heatmaps reserve a 500 x 500
 plot beginning at `(80, 50)` with axis and legend space around it.
+
+Every document begins with an explicit opaque white background. Labels, axes,
+and legends therefore retain their intended contrast when GitHub or another
+host page uses a dark theme.
 
 Physical coordinates map to SVG as:
 
