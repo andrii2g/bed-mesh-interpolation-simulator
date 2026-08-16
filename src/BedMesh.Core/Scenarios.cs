@@ -73,6 +73,10 @@ public static class ScenarioCatalog
                     nameof(name));
         }
 
-        return new SimulationScenario(name.Trim().ToLowerInvariant(), description, bed, surface);
+        return new SimulationScenario(
+            name.Trim().ToLowerInvariant(),
+            description,
+            bed,
+            new BoundedSurface(surface, bed.Bounds));
     }
 }

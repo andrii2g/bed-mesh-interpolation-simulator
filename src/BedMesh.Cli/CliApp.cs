@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Text;
 using BedMesh.Core;
 
-internal static class CliApp
+public static class CliApp
 {
     public static int Run(string[] args)
     {
@@ -70,6 +70,7 @@ internal static class CliApp
         string output = options.String("output", Path.Combine("output", $"compare-{name}"));
         Directory.CreateDirectory(output);
         var csv = new StringBuilder("mesh,probes,interpolation,rmse,mae,max_abs,max_positive,max_negative,worst_x,worst_y\n");
+        var comparisonEntries = new List<MeshComparisonEntry>();
         foreach (int mesh in new[] { 3, 5, 7 })
         {
             foreach (ISurfaceInterpolator interpolator in interpolators)
@@ -83,6 +84,7 @@ internal static class CliApp
                     Path.Combine(output, $"{mesh}x{mesh}-{algorithm}"),
                     CommonErrorScale: options.OptionalDouble("common-error-scale")));
                 ErrorMetrics m = result.Metrics;
+                comparisonEntries.Add(new MeshComparisonEntry(mesh, mesh * mesh, result.Request.Interpolator.Name, m));
                 csv.AppendLine(FormattableString.Invariant(
                     $"{mesh}x{mesh},{mesh * mesh},{algorithm},{m.RootMeanSquareError:R},{m.MeanAbsoluteError:R},{m.MaximumAbsoluteError:R},{m.MaximumPositiveError:R},{m.MaximumNegativeError:R},{m.WorstErrorLocation.X:R},{m.WorstErrorLocation.Y:R}"));
                 Report(result);
@@ -91,6 +93,9 @@ internal static class CliApp
 
         string path = Path.Combine(output, "comparison.csv");
         File.WriteAllText(path, csv.ToString(), new UTF8Encoding(false));
+        string chartPath = Path.Combine(output, "mesh-comparison.svg");
+        MeshComparisonSvgRenderer.Write(chartPath, comparisonEntries);
+        Console.WriteLine($"Comparison SVG: {Path.GetFullPath(chartPath)}");
         Console.WriteLine($"Comparison CSV: {Path.GetFullPath(path)}");
         return 0;
     }
