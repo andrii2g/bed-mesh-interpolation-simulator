@@ -1,0 +1,22 @@
+{
+  "note": "Illustrative scenario schema for future external scenario loading. MVP may use built-in C# factories only.",
+  "scenarios": [
+    {
+      "name": "hidden-bump",
+      "bed": {
+        "width": 250.0,
+        "depth": 250.0
+      },
+      "surfaces": [
+        {
+          "type": "gaussian-bump",
+          "amplitude": 0.15,
+          "centerX": 171.0,
+          "centerY": 94.0,
+          "sigmaX": 12.0,
+          "sigmaY": 12.0
+        }
+      ]
+    }
+  ]
+}
