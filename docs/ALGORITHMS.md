@@ -1,5 +1,9 @@
 # Algorithms and Numerical Methods
 
+This document retains the full mathematical derivations and sampling analysis.
+The equations are implemented in `BedMesh.Core`; the final sections map them to
+the current types, CLI defaults, validation rules, and output scaling.
+
 # 1. Problem statement
 
 Let the true bed surface be:
@@ -72,6 +76,15 @@ Spacing:
 Example for a 250 mm bed:
 
 | Mesh | X/Y intervals | spacing |
+
+The implementation also supports symmetric probe margins. With `offsetX` and
+`offsetY`, coordinates span `[offsetX, W-offsetX]` and
+`[offsetY, D-offsetY]` using the same uniform-grid formula over the remaining
+width and depth. Offsets must be finite, non-negative, and leave a non-empty
+probed rectangle.
+
+`ProbeSimulator` supports any core grid of at least 2x2. The CLI intentionally
+exposes only 3x3, 5x5, and 7x7.
 |---|---:|---:|
 | 3x3 | 2 | 125.0 mm |
 | 5x5 | 4 | 62.5 mm |
@@ -239,6 +252,10 @@ Estimate:
 
 If:
 
+
+In the implementation, `InverseDistanceOptions.ExactNodeTolerance` defaults to
+`1e-12`, and `Power` defaults to `2.0`. Both must be finite; power must be
+positive and tolerance cannot be negative.
 \[
 d_k\le\epsilon
 \]
@@ -289,6 +306,11 @@ At each point:
 z_{true}=f(x_i,y_j)
 \]
 
+
+`SurfaceEvaluator` evaluates across `ProbeGrid.Bounds`, not blindly across the
+whole bed. This keeps offset experiments inside the sampled rectangle and
+prevents extrapolation. CLI evaluation dimensions are validated from 2 through
+2001, with 251 as the default.
 \[
 z_{estimated}=g(x_i,y_j)
 \]
@@ -297,7 +319,7 @@ z_{estimated}=g(x_i,y_j)
 e_{ij}=z_{estimated}-z_{true}
 \]
 
-Recommended default:
+Implemented CLI default:
 
 \[
 251\times251=63,001
@@ -509,7 +531,7 @@ Do not round:
 
 Round only formatted output.
 
-Recommended test tolerances:
+The implemented tests use these tolerances:
 
 ```text
 exact/simple arithmetic fixtures: 1e-12
@@ -528,6 +550,39 @@ Let:
 
 Bilinear:
 
+
+---
+
+# 16. Implementation mapping
+
+| Mathematical role | Implemented type |
+|---|---|
+| Analytical ground truth | `IBedSurface` and surface models |
+| Physical bed guard | `BoundedSurface` |
+| Uniform sparse sampling | `ProbeSimulator` and `ProbeGrid` |
+| Bilinear reconstruction | `BilinearInterpolator` |
+| IDW reconstruction | `InverseDistanceInterpolator` |
+| Independent dense grid | `SurfaceEvaluator` |
+| Metrics and nearest-rank percentiles | `ErrorMetricsCalculator` |
+| Scenario orchestration | `SimulationRunner` |
+
+Both interpolators are stateless and receive only `ProbeGrid`; they never
+receive the analytical surface. Exact probe-node values are returned directly.
+Queries outside the probed bounds throw instead of extrapolating.
+
+---
+
+# 17. Visualization and comparison scaling
+
+`SvgRenderer` gives true and reconstructed heatmaps one shared height range.
+Signed error uses a symmetric zero-centred range
+`[-max(abs(error)), +max(abs(error))]`. Absolute error uses the corresponding
+`[0, max(abs(error))]` range.
+
+The CLI option `--common-error-scale <mm>` supplies an explicit shared error
+extent for separate runs. Comparison mode evaluates 3x3, 5x5, and 7x7 meshes
+against the same scenario and writes invariant-culture metrics to
+`comparison.csv` plus `mesh-comparison.svg`.
 - cell lookup on uniform grid: \(O(1)\);
 - interpolation: \(O(1)\);
 - total: \(O(E)\).
