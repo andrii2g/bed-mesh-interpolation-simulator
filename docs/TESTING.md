@@ -2,6 +2,10 @@
 
 The tests must verify mathematics, not only code paths.
 
+This document preserves the mathematical test design and records its current
+implementation status. The final section maps the strategy to the executable
+xUnit suite and continuous-integration workflow.
+
 # 1. Geometry tests
 
 Validate:
@@ -391,6 +395,54 @@ Most tests should be unit tests.
 
 # 14. Regression fixtures
 
-Once the implementation is stable, optionally preserve a small deterministic CSV fixture for one scenario.
+A small deterministic CSV regression fixture remains optional. The current suite
+verifies generated comparison CSV and SVG structurally instead of snapshotting
+large output documents.
 
-Do not snapshot huge SVG documents unless there is a clear reason; structural SVG tests are less brittle.
+# 15. Current implementation coverage
+
+The repository contains 25 deterministic xUnit tests. Parallelization is disabled
+because CLI smoke tests temporarily capture process-wide console streams.
+
+## Run locally
+
+```bash
+dotnet restore BedMeshInterpolationSimulator.slnx
+dotnet build BedMeshInterpolationSimulator.slnx --configuration Release --no-restore
+dotnet test BedMeshInterpolationSimulator.slnx --configuration Release --no-build
+dotnet format BedMeshInterpolationSimulator.slnx --verify-no-changes --no-restore
+```
+
+`Directory.Build.props` enables nullable analysis, deterministic compilation,
+latest language features, and warnings as errors.
+
+## Implemented test matrix
+
+| Test class | Verified behavior |
+|---|---|
+| `GeometryTests` | finite dimensions and bounds containment |
+| `SurfaceModelTests` | hand-calculated values and composition |
+| `ProbeSimulatorTests` | coordinates, values, count, and offsets |
+| `BilinearInterpolatorTests` | nodes, constants, planes, fixture, and continuity |
+| `InverseDistanceInterpolatorTests` | exact nodes, symmetry, and power validation |
+| `SurfaceEvaluatorTests` | independent evaluation and signed error |
+| `ErrorMetricsTests` | hand-calculated metrics and percentiles |
+| `ScenarioTests` | scenario construction and bilinear baselines |
+| `BoundaryAcceptanceTests` | in-bed evaluation and boundary rejection |
+| `ScenarioInterpolationAcceptanceTests` | every scenario, mesh, and algorithm |
+| `SvgRendererTests` | deterministic heatmap XML and sign legend |
+| `SvgArtifactTests` | seven-file sets and comparison SVG |
+| `CliSmokeTests` | commands, output files, and invalid input |
+
+## Acceptance and automation
+
+The acceptance suite covers all six scenarios with 3x3, 5x5, and 7x7 meshes
+using bilinear and IDW interpolation. It enforces flat exactness, bilinear plane
+exactness within `1e-10`, exact probe-node reproduction, edge continuity, finite
+metrics, the `estimated - true` convention, deterministic valid SVG, and CLI
+validation exit code `2`.
+
+`.github/workflows/ci.yml` runs restore, Release build, tests, and a full default
+251x251 hidden-bump smoke simulation on pushes and pull requests using .NET 10.
+Generated output, build directories, test results, and coverage data are ignored
+by Git.

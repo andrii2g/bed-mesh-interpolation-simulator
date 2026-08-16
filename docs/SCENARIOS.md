@@ -2,6 +2,11 @@
 
 Built-in scenarios must be deterministic and documented.
 
+The current `ScenarioCatalog` implements all six scenarios below. Their default
+parameters use a 250 x 250 mm bed; custom dimensions scale centres, radii, and
+Gaussian widths while preserving each scenario's shape and documented total
+tilt.
+
 Default bed:
 
 \[
@@ -37,7 +42,7 @@ Purpose:
 
 - prove bilinear exactness for a plane.
 
-Recommended:
+Implemented default:
 
 \[
 \Delta z_x=+0.12\text{ mm}
@@ -69,7 +74,7 @@ Purpose:
 - smooth curvature;
 - demonstrate convergence with mesh density.
 
-Recommended:
+Implemented default:
 
 \[
 z=
@@ -99,7 +104,7 @@ Purpose:
 - opposite curvature along X and Y;
 - test sign changes.
 
-Recommended:
+Implemented default:
 
 \[
 z=
@@ -118,7 +123,7 @@ Purpose:
 
 - flagship undersampling demonstration.
 
-Recommended Gaussian:
+Implemented default Gaussian:
 
 \[
 A=0.15\text{ mm}
@@ -182,7 +187,7 @@ Purpose:
 
 - visually plausible synthetic warped bed.
 
-Recommended combination:
+Implemented default combination:
 
 ```text
 small X/Y tilt
@@ -305,6 +310,32 @@ flowchart LR
 
 ### Demonstration C — same bump, different alignment
 
-Translate bump from probe node to cell center.
+As an extension experiment, translate a Gaussian bump from a probe node to a
+cell center. The built-in `hidden-bump` parameters remain fixed.
 
 This shows that sample placement matters independently from probe count.
+
+## Current commands and verification
+
+List the implemented catalog:
+
+```bash
+dotnet run --project src/BedMesh.Cli -- list-scenarios
+```
+
+Run one scenario with both interpolators:
+
+```bash
+dotnet run --project src/BedMesh.Cli -- simulate --scenario complex --mesh 7 --interpolation both --output output/complex
+```
+
+Compare supported mesh densities:
+
+```bash
+dotnet run --project src/BedMesh.Cli -- compare --scenario bowl --interpolation bilinear --output output/bowl-comparison
+```
+
+The automated suite constructs every scenario for 3x3, 5x5, and 7x7 grids with
+both interpolation algorithms and asserts finite metrics. Separate acceptance
+tests enforce flat exactness, bilinear plane exactness, deterministic artifacts,
+and rejection of out-of-bed queries.

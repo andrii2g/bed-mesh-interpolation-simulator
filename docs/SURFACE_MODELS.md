@@ -11,6 +11,11 @@ public interface IBedSurface
 
 All distances and heights are in millimetres.
 
+The current implementation includes every model through composite surfaces, plus
+a `BoundedSurface` wrapper for physical bed limits. Distances and heights are
+millimetres; radii and Gaussian sigma values are validated as positive finite
+numbers.
+
 ---
 
 # 1. Flat surface
@@ -284,7 +289,11 @@ Analytical surfaces are defined across the complete bed bounds.
 
 The simulator does not clamp surface heights.
 
-Coordinates outside the bed are invalid for the MVP.
+Coordinates outside the bed are invalid in the current simulator.
+`ScenarioCatalog` wraps every built-in model in `BoundedSurface`, which accepts
+inclusive coordinates from `(0, 0)` through `(Width, Depth)` and rejects
+non-finite or out-of-bed queries. Individual analytical types remain reusable;
+the wrapper supplies the physical boundary.
 
 ---
 
@@ -304,4 +313,25 @@ z=A\sin(k_xx+\phi_x)\sin(k_yy+\phi_y)
 - Fourier-generated synthetic bed;
 - imported measured bed samples.
 
-A sinusoidal surface would be especially useful for formal spatial-frequency experiments, but is not required for v1.
+A sinusoidal surface would be especially useful for formal spatial-frequency
+experiments, but is not implemented in the current version.
+
+## Current implementation map
+
+| Model | Source type |
+|---|---|
+| Flat | `FlatSurface` |
+| Plane | `TiltSurface` |
+| Elliptical paraboloid | `BowlSurface` |
+| Hyperbolic paraboloid | `SaddleSurface` |
+| Local bump or depression | `GaussianBumpSurface` |
+| Additive combination | `CompositeSurface` |
+| Physical bed boundary | `BoundedSurface` |
+
+All model types live in `src/BedMesh.Core`. `ScenarioCatalog.Create` scales
+built-in models for custom bed dimensions: tilt preserves total rise, bowl and
+saddle radii use half-spans, and Gaussian centres and widths scale from the
+documented 250 mm baseline.
+
+Constructors reject non-finite parameters. Radii and Gaussian sigma values must
+be positive, while Gaussian amplitude may be negative to model a depression.
