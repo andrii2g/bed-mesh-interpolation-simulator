@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/BedMesh.Cli/BedMesh.Cli.csproj" />
+    <Project Path="src/BedMesh.Core/BedMesh.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/BedMesh.Core.Tests/BedMesh.Core.Tests.csproj" />
+  </Folder>
+</Solution>
