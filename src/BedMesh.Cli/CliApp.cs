@@ -161,7 +161,7 @@ public static class CliApp
 
         Commands:
           simulate        Run a scenario and generate metrics plus seven SVG files.
-          compare         Run 3x3, 5x5, and 7x7 and write comparison.csv.
+          compare         Run 3x3, 5x5, and 7x7 and write CSV plus comparison SVG.
           list-scenarios  List deterministic built-in surfaces.
 
         Options:

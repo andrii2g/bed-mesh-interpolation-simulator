@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\BedMesh.Core\BedMesh.Core.csproj" />
+    <ProjectReference Include="..\..\src\BedMesh.Cli\BedMesh.Cli.csproj" />
   </ItemGroup>
 
 </Project>
